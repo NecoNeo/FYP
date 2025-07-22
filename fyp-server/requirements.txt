@@ -1,2 +1,5 @@
 fastapi
 efinance
+numpy
+pandas
+openpyxl

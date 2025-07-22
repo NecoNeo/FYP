@@ -1,9 +1,19 @@
 from typing import Union
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
+origins = ["http://localhost:5173"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
@@ -20,4 +30,4 @@ def read_item(item_id: int, q: Union[str, None] = None):
 def get_real_time_quotes():
     from stock.real_time import get_real_time_quotes
     stock_list = get_real_time_quotes()
-    return { "stock_list": stock_list }
+    return JSONResponse(content={ "stock_list": stock_list })
