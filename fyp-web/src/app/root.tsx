@@ -8,7 +8,14 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+
+import { createTheme, MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
 import "./app.css";
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +49,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <MantineProvider theme={theme}>
+      <Outlet />
+    </MantineProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
